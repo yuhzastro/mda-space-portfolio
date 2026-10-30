@@ -53,3 +53,18 @@ def propagate_cowell(r0, v0, t_span, t_eval=None, j2=True, rtol=1e-12, atol=1e-1
     sol = solve_ivp(f, t_span, np.concatenate([r0, v0]), method="DOP853",
                     t_eval=t_eval, rtol=rtol, atol=atol)
     return sol.t, sol.y[:3].T, sol.y[3:].T
+
+
+def potential_j2(r, mu=MU_EARTH):
+    """Gravitational potential through $J_2$ [km^2/s^2], with $\\ddot r = -\\nabla U$:
+
+    $U = -\\frac{\\mu}{r}\\left[1 - J_2\\left(\\frac{R_\\oplus}{r}\\right)^2 P_2(\\sin\\phi)\\right]$,
+    $P_2(x) = \\tfrac{1}{2}(3x^2 - 1)$, $\\sin\\phi = z/r$.
+
+    `accel_j2` is the analytic gradient of this scalar field (MATH 217); the
+    tests check it against a finite-difference gradient.
+    """
+    r = np.asarray(r, float)
+    rn = np.linalg.norm(r)
+    s = r[2] / rn
+    return -mu / rn * (1 - J2 * (R_EARTH / rn) ** 2 * 0.5 * (3 * s * s - 1))
