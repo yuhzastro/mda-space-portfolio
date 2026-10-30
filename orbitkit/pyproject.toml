@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orbitkit"
+version = "0.1.0"
+description = "SGP4/J2 orbit propagation, frames, pass prediction and Walker constellation coverage"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy", "sgp4>=2.20"]
+
+[project.optional-dependencies]
+dev = ["pytest", "matplotlib"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

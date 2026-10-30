@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linkbudget"
+version = "0.1.0"
+description = "Satellite RF link budgets: ITU-R P.618/P.838 rain fade, G/T, DVB-S2 ACM and Doppler over real passes"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+dev = ["pytest", "matplotlib", "itur>=0.4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "../orbitkit/src"]
